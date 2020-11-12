@@ -1,6 +1,11 @@
 import * as React from 'react';
 import styles from './Minesweeper.module.scss';
-import MinesweeperSquareModel from '../models/MinesweeperSquareModel'
+import MinesweeperSquareModel from '../models/MinesweeperSquareModel';
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
+import { faFlag, faBomb, faBalanceScale, faSortAmountUp } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
+import {SquareType} from '../constants';
 
 export interface IMinesweeperSquareProps {
     square: MinesweeperSquareModel;
@@ -22,23 +27,176 @@ const MinesweeperSquare = (props: IMinesweeperSquareProps) => {
         }
     }
 
-    
+    let iconProps: FontAwesomeIconProps = {
+        icon: faBalanceScale,
+        onMouseUp: e => onMouseUp(e),
+        onContextMenu: e => e.preventDefault(),
+        border: true,
+        size: "xs",
+    };
 
-    return (
-        <button style={{border: "1px solid black", width: "25px", minHeight: "25px", maxHeight: "25px", display: "inline-block"}}
-            onMouseUp={(e) => onMouseUp(e)}
-            onContextMenu={(e)=> e.preventDefault()}
-            >
-            {props.square._displayedValue}
-        </button>
+    switch (props.square._displayedValue
+        
+        ) {
 
-
-
-
-        // <div className={styles.minesweeperSquare} style={{width: "50"}}>
-        //     <p style={{border: "1px solid black", marginTop: "auto",  }}>{props.square._value}</p>
-        // </div>
-    );
+        case SquareType.Zero:            
+            return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+               <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#FFFFFF"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.One:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#0000ff"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Two:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#00ff00"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Three: return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Four:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+          case SquareType.Five:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Six:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Seven:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Eight:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Unclicked: return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBalanceScale}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#ffffff"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.Bomb:  return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faBomb}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#000000"
+                    size="2x"
+                    border
+                />
+            </div>
+        );
+        case SquareType.BombClicked: return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+            <FontAwesomeIcon
+                icon={faBomb}
+                onMouseUp={(e) => onMouseUp(e)}
+                onContextMenu={(e)=> e.preventDefault()}
+                color="#000000"
+                size="2x"
+                border
+            />
+        </div>
+        )
+        case SquareType.Flag: return (
+            <div style={{display: "inline-block", border: "0.25px solid black", minWidth: 31, margin: 2}}>
+                <FontAwesomeIcon
+                    icon={faFlag}
+                    onMouseUp={(e) => onMouseUp(e)}
+                    onContextMenu={(e)=> e.preventDefault()}
+                    color="#ff0000"
+                    size="2x"
+                    border
+                />
+            </div>
+        )
+    }
 }
 
 export default MinesweeperSquare;

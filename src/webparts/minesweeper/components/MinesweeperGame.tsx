@@ -10,6 +10,8 @@ import MinesweeperSquareModel from '../models/MinesweeperSquareModel';
 //Components
 import MinesweeperSquare, { IMinesweeperSquareProps } from './MinesweeperSquare';
 import { IMinesweeperGameState } from './IMinesweeperGameState';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
 
 
 export default class MinesweeperGame extends React.Component<IMinesweeperGameProps, IMinesweeperGameState> {
@@ -19,9 +21,9 @@ export default class MinesweeperGame extends React.Component<IMinesweeperGamePro
      //Remember to call the base constructor 
      super(props);
 
-     let numberOfRows = 10;
-     let numberOfColumns = 10;
-     let numberOfBombs = 10;
+     let numberOfRows = 3;
+     let numberOfColumns = 3;
+     let numberOfBombs = 1;
 
      let board: MinesweeperGameModel = new MinesweeperGameModel(numberOfRows, numberOfColumns, numberOfBombs);
     board.setUpGameBoard();
