@@ -17,8 +17,8 @@ export default class MinesweeperSquareModel {
 
     public toggleFlag() {
         this._displayedValue = (this._displayedValue == SquareType.Flag) ? 
-            SquareType.Flag : 
-            SquareType.Unclicked;
+            SquareType.Unclicked :
+            SquareType.Flag;  
     }
 
 
