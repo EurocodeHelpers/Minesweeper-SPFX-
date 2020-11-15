@@ -78,7 +78,7 @@ export default class MinesweeperGameModel {
         //Otherwise..
         else {
 
-            let numberOfSurroundingBombs = 0;
+            let numberOfSurroundingBombs: number = 0;
 
             //Count the number of bombs around the considered square
             for (let i=-1; i<=1; i++) {
@@ -106,16 +106,16 @@ export default class MinesweeperGameModel {
     
     public leftClickSquare(x: number, y:number) {
 
-        if (this._isGameOver){
+        if (this._isGameOver) {
             //Do nothing
         }
-        else if (this._grid[x][y]._displayedValue == this._grid[x][y]._value){
+        else if (this._grid[x][y]._displayedValue == this._grid[x][y]._value) {
             //Do nothing
         }
-        else if (this._grid[x][y]._value == SquareType.Bomb){
+        else if (this._grid[x][y]._value == SquareType.Bomb) {
 
             //Change to red bomb
-            this._grid[x][y]._displayedValue = SquareType.BombClicked;;
+            this._grid[x][y]._displayedValue = SquareType.BombClicked;
 
             //Show all the bombs on the grid
             this._grid.map(row => {
@@ -131,7 +131,7 @@ export default class MinesweeperGameModel {
         }
     }
 
-    public rightCLickSquare(x:number, y: number) {
+    public rightClickSquare(x:number, y: number) {
 
         //If Game Over...
         if (this._isGameOver)
