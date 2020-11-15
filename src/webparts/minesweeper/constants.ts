@@ -15,4 +15,8 @@ export enum SquareType {
     BombClicked=11,
     Flag=12,
     Undefined=13
-}
+};
+
+export const ClickedColor: string = "#ffffff";
+
+export const UnclickedColor: string = "#BDBDBD";
