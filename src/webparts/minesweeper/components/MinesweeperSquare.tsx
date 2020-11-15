@@ -34,59 +34,54 @@ const MinesweeperSquare = (props: IMinesweeperSquareProps) => {
         if (e.button == 2){
             onRightClick(square._X, square._Y);
         }
-    }
+    }    
 
-    switch (square._displayedValue) {
+    return (
+        <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}}>
+           
+           {(() => {
+                
+                switch (square._displayedValue) {
+                    case SquareType.Zero:            
+                    return (
+                            <NumberSquare color="white" number=" " />
+                    );
+                case SquareType.One:  
+                    return (
+                            <NumberSquare color="blue" number="1" />
+                    );
+                case SquareType.Two:  
+                    return (
+                            <NumberSquare color="green" number="2" />
+                    );
+                case SquareType.Three:  
+                    return (
+                            <NumberSquare color="red" number="3" />
+                    );
+                case SquareType.Unclicked: 
+                    return (
+                            <UnclickedSquare  />
+                    );
+                case SquareType.Bomb:
+                    return (
+                            <BombSquare />
+                    );
+                case SquareType.BombClicked:
+                    return (
+                            <BombSquareGameOver />
+                    );
+                case SquareType.Flag:
+                    return (
+                            <FlagSquare />
+                    );
+                   
+                }
+            })()}
+        </div>      
 
-        case SquareType.Zero:            
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}}>
-                    <NumberSquare color="white" number=" " />
-                </div>                
-            );
-        case SquareType.One:  
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}} >
-                    <NumberSquare color="blue" number="1" />
-                </div>                
-            );
-        case SquareType.Two:  
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}} >
-                    <NumberSquare color="green" number="2" />
-                </div>                
-            );
-        case SquareType.Three:  
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}}>
-                    <NumberSquare color="red" number="3" />
-                </div>                
-            );
-        case SquareType.Unclicked: 
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}}>
-                    <UnclickedSquare  />
-                </div>                
-            );
-        case SquareType.Bomb:
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}} >
-                    <BombSquare />
-                </div>   
-            );
-        case SquareType.BombClicked:
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}} >
-                    <BombSquareGameOver />
-                </div>   
-            );
-        case SquareType.Flag:
-            return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}}>
-                    <FlagSquare />
-                </div>   
-            );
-    }
+    )
+
+   
 }
 
 export default MinesweeperSquare;
