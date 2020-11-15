@@ -33,8 +33,6 @@ export default class MinesweeperGameModel {
                 this._setSquareValue(square._X, square._Y);
             })
         })
-
-        alert("hi");
     }
 
     private _setUpEmptyGrid(): void {
@@ -57,23 +55,17 @@ export default class MinesweeperGameModel {
         while (numberOfBombsSet !== this._numberOfBombs) {
 
             //Generate random X and Y Co-ordinates
-            let X_trial: number = Math.floor(Math.random() * (this._numberOfRows-1));   //Between 0 and (NumberOfRows-1)
-            let y_trial: number = Math.floor(Math.random() * (this._numberOfColumns-1));   //Between 0 and (NumberOfRows-1)
-
-            // alert(`Try ${X_trial}, ${y_trial}`);
+            let X_trial: number = Math.floor(Math.random() * (this._numberOfRows));   //Between 0 and (NumberOfRows-1)
+            let y_trial: number = Math.floor(Math.random() * (this._numberOfColumns));   //Between 0 and (NumberOfRows-1)
 
             //If square has not already been set...
             if (this._grid[X_trial][y_trial]._value == SquareType.Undefined) {
                 
-                // console.log(`Set value ${X_trial}, ${y_trial}`);
-
                 //Update counter and set the square to be type bomb
                 numberOfBombsSet++;
                 this._grid[X_trial][y_trial]._value = SquareType.Bomb;
             }
         }
-
-        alert(numberOfBombsSet);
     }
 
     private _setSquareValue(x: number, y:number): void {
