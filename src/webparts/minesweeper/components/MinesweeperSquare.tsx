@@ -23,22 +23,24 @@ export interface IMinesweeperSquareProps {
 
 const MinesweeperSquare = (props: IMinesweeperSquareProps) => {
 
+    let {square, onLeftClick, onRightClick} = props;
+
     const onMouseUp = (e) => {
 
         //TODO: Refactor to switch statement
         if (e.button == 0){
-            props.onLeftClick(props.square._X, props.square._Y);
+            onLeftClick(square._X, square._Y);
         }
         if (e.button == 2){
-            props.onRightClick(props.square._X, props.square._Y);
+            onRightClick(square._X, square._Y);
         }
     }
 
-    switch (props.square._displayedValue) {
+    switch (square._displayedValue) {
 
         case SquareType.Zero:            
             return (
-                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}} >
+                <div onMouseUp={(e) => onMouseUp(e)} onContextMenu={(e)=> e.preventDefault()} style={{display: "inline-block"}}>
                     <NumberSquare color="white" number=" " />
                 </div>                
             );

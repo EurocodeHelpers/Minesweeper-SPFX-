@@ -8,11 +8,8 @@ import MinesweeperGameModel from '../models/MinesweeperGameModel';
 import MinesweeperSquareModel from '../models/MinesweeperSquareModel';
 
 //Components
-import MinesweeperSquare, { IMinesweeperSquareProps } from './MinesweeperSquare';
+import MinesweeperSquare from './MinesweeperSquare'
 import { IMinesweeperGameState } from './IMinesweeperGameState';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
-
 
 export default class MinesweeperGame extends React.Component<IMinesweeperGameProps, IMinesweeperGameState> {
 
@@ -23,7 +20,7 @@ export default class MinesweeperGame extends React.Component<IMinesweeperGamePro
 
      let numberOfRows = 3;
      let numberOfColumns = 3;
-     let numberOfBombs = 1;
+     let numberOfBombs = 3;
 
      let board: MinesweeperGameModel = new MinesweeperGameModel(numberOfRows, numberOfColumns, numberOfBombs);
     board.setUpGameBoard();
@@ -34,11 +31,12 @@ export default class MinesweeperGame extends React.Component<IMinesweeperGamePro
   }
 
   public render(): React.ReactElement<IMinesweeperGameProps> {
+
     return (
-      <div className={styles.minesweeper}>
+      <div className={styles.minesweeper} >
         {this.state.game._grid.map(row => {
           return (
-            <div>
+            <div className="fa-4x" style={{border: "1px solid black"}}>
               {
                 row.map(square => {
                   return(
@@ -54,7 +52,7 @@ export default class MinesweeperGame extends React.Component<IMinesweeperGamePro
           )
         })}        
       </div>
-    );
+    );    
   }
 
   private leftClickSquare = (x: number, y:number) => {
@@ -70,8 +68,10 @@ export default class MinesweeperGame extends React.Component<IMinesweeperGamePro
 
   private rightCLickSquare = (x: number, y:number) => {
 
+    alert("hi");
+
     let game = this.state.game;
-    game.rightCLickSquare(x,y);
+    game.rightClickSquare(x,y);
 
     this.setState({
       game: game
