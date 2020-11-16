@@ -1,5 +1,6 @@
 import MinesweeperGameModel from "../models/MinesweeperGameModel";
 
-export interface IMinesweeperGameState {
+export default interface IMinesweeperState {
   game: MinesweeperGameModel;
+  isMouseDownOnEmoticon: boolean;
 }

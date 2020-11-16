@@ -8,8 +8,8 @@ import {
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'MinesweeperWebPartStrings';
-import MinesweeperGame from './components/MinesweeperGame';
-import { IMinesweeperGameProps } from './components/IMinesweeperGameProps';
+import Minesweeper from './components/Minesweeper';
+import IMinesweeperProps from './components/IMinesweeperProps';
 
 export interface IMinesweeperWebPartProps {
   description: string;
@@ -19,8 +19,8 @@ export default class MinesweeperWebPart extends BaseClientSideWebPart<IMinesweep
 
   public render(): void {
 
-    const element: React.ReactElement<IMinesweeperGameProps> = React.createElement(
-      MinesweeperGame,
+    const element: React.ReactElement<IMinesweeperProps> = React.createElement(
+      Minesweeper,
       {
         description: this.properties.description
       }

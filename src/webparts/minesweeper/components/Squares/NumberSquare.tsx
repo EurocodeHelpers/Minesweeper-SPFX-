@@ -20,7 +20,7 @@ const NumberSquare = (props: INumberSquareProps) => {
         <div className="fa-layers fa-fw">
             <FontAwesomeIcon 
                 icon="square" 
-                color="#cccccc"
+                color="#C0C0C0"
             />
             <span className="fa-layers-text fa-inverse" data-fa-transform="shrink-16 down-3" 
             style={{fontWeight: 900, fontSize: 22, color: color }}>{number}</span>

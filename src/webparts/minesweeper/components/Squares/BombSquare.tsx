@@ -8,7 +8,7 @@ const BombSquare = () => {
         <span className="fa-layers fa-fw" style={{display: "inline-block"}}>
             <FontAwesomeIcon 
                 icon="square" 
-                color="#999999"
+                color="#C0C0C0"
                 onContextMenu={(e)=> e.preventDefault()}
             />
             <FontAwesomeIcon icon={faBomb} color="black" transform="shrink-6" />
