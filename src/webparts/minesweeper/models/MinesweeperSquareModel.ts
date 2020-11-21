@@ -3,25 +3,36 @@ import {SquareType} from '../constants';
 export default class MinesweeperSquareModel {
 
     //Properties
-    public _value: SquareType = SquareType.Undefined
-    public _displayedValue: SquareType = SquareType.Undefined
-    public _X: number = 0;
-    public _Y: number = 0;
+    public _value: SquareType = SquareType.Undefined;
+    public _isRevealed: boolean = false;
+    public _isFlag: boolean = false;
+    public _row: number = 0;
+    public _col: number = 0;    
 
-    constructor(value: SquareType, x: number, y:number) {
+    constructor(value: SquareType, row: number, col:number) {
         this._value = value;
-        this._displayedValue = SquareType.Unclicked;
-        this._X = x;
-        this._Y = y;
+        this._row = row;
+        this._col = col;
     }
 
-    public toggleFlag() {
-        this._displayedValue = (this._displayedValue == SquareType.Flag) ? 
-            SquareType.Unclicked :
-            SquareType.Flag;  
+    public onLeftClick(): void {
+        if (this._isRevealed) {
+            //Do nothing
+        }
+        else{
+            this._isRevealed = true;
+            this._isFlag = false;
+        }
     }
 
+    public onRightClick(): void {
 
-
+        if (this._isRevealed) {
+            //Do nothing
+        }
+        else{
+            this._isFlag = !this._isFlag;;
+        }
+    }
 
 }
