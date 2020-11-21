@@ -20,8 +20,6 @@ import IMinesweeperState from './IMinesweeperState';
 import Emoticon from './Dashboard/Emoticon';
 import TimeElapsed from './Dashboard/TimeElapsed';
 
-
-
 export default class Minesweeper extends React.Component<IMinesweeperProps, IMinesweeperState> {
 
   constructor(props: IMinesweeperProps) {
@@ -30,10 +28,9 @@ export default class Minesweeper extends React.Component<IMinesweeperProps, IMin
 
      let numberOfRows = 9;
      let numberOfColumns = 9;
-     let numberOfBombs = 1;
+     let numberOfBombs = 15;
 
      let board: MinesweeperGameModel = new MinesweeperGameModel(numberOfRows, numberOfColumns, numberOfBombs);
-     board.setUpGameBoard();
  
      this.state = {
        game: board,
@@ -73,7 +70,7 @@ export default class Minesweeper extends React.Component<IMinesweeperProps, IMin
               </div>
 
               {/* Timer */}
-              <TimeElapsed timer={this.state.game._clock} />
+              <TimeElapsed timer={this.state.game._timer} />
               
           </div>
 
@@ -115,8 +112,6 @@ export default class Minesweeper extends React.Component<IMinesweeperProps, IMin
   
   private onMouseDownEmoticon = () => {
 
-    let x: boolean = this.state.isMouseDownOnEmoticon;
-
     this.setState({
       isMouseDownOnEmoticon: true,
     });
@@ -124,12 +119,11 @@ export default class Minesweeper extends React.Component<IMinesweeperProps, IMin
 
   private onEmoticonLeftMouseUp = () => {
 
-    let numberOfRows = 9;
-    let numberOfColumns = 9;
-    let numberOfBombs = 9;
+    let numberOfRows = 4;
+    let numberOfColumns = 4;
+    let numberOfBombs = 1;
 
     let board: MinesweeperGameModel = new MinesweeperGameModel(numberOfRows, numberOfColumns, numberOfBombs);
-    board.setUpGameBoard();
 
     this.setState({
       game: board,

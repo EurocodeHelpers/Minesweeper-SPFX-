@@ -3,123 +3,109 @@ import { SquareType } from '../constants';
 
 export default class MinesweeperGameModel {
 
-    private _numberOfRows: number = 0;
-    private _numberOfColumns: number = 0;
-    private _numberOfBombs: number = 0;
+    private _rows: number = 0;
+    private _cols: number = 0;
+    private _bombs: number = 0;
 
     public _isGameOver: boolean = false;
     public _grid: MinesweeperSquareModel[][] = null;    //[Row][Column]
-    public _clock: Date = null;
+    public _timer: Date = new Date();
 
-    
-    constructor(numberOfRows: number, numberOfColumns: number, numberOfBombs: number) {
+    constructor(rows: number, cols: number, bombs: number) {
         
-        this._numberOfRows = numberOfRows; 
-        this._numberOfColumns = numberOfColumns
-        this._numberOfBombs = numberOfBombs;
+        this._rows = rows; 
+        this._cols = cols
+        this._bombs = bombs;
 
         //Start the timer 
-        this._clock = new Date();
-    }
+        this._timer = new Date();
 
-    //Setup
-
-    public setUpGameBoard(): void {
-        
-        //Set up the empty grid
-        this._setUpEmptyGrid();       
-
-        //Set the bomb locations
+        //Setup the game board 
+        this._setUpEmptyGrid();
         this._setBombLocations();
-
-        //Calculate each squares value
-        this._grid.map(row => {
-            row.map(square => {
-                this._setSquareValue(square._X, square._Y);
-            })
-        });
-
-     
+        this._setSquareValues();
     }
 
     private _setUpEmptyGrid(): void {
 
         //Create the grid [Row][Col]
-        this._grid = [...new Array(this._numberOfRows)].map(elem => new Array(this._numberOfColumns));
+        this._grid = [...new Array(this._rows)].map(elem => new Array(this._cols));
 
         //Fill each of the 2D Array elements with "?" 
-        for (let i=0; i<this._numberOfRows; i++) {
-            for (let j=0; j<this._numberOfColumns; j++) {
+        for (let i=0; i<this._rows; i++) {
+            for (let j=0; j<this._cols; j++) {
                 this._grid[i][j] = new MinesweeperSquareModel(SquareType.Undefined, i, j)
             }
         }
+
     }
 
     private _setBombLocations(): void {
 
         let numberOfBombsSet: number = 0;
 
-        while (numberOfBombsSet !== this._numberOfBombs) {
+        while (numberOfBombsSet < this._bombs) {
 
-            //Generate random X and Y Co-ordinates
-            let X_trial: number = Math.floor(Math.random() * (this._numberOfRows));   //Between 0 and (NumberOfRows-1)
-            let y_trial: number = Math.floor(Math.random() * (this._numberOfColumns));   //Between 0 and (NumberOfRows-1)
+            //Generate random row and column
+            let row: number = Math.floor(Math.random() * (this._rows));   //Between 0 and (NumberOfRows-1)
+            let col: number = Math.floor(Math.random() * (this._cols));   //Between 0 and (NumberOfRows-1)
 
-            //If square has not already been set...
-            if (this._grid[X_trial][y_trial]._value == SquareType.Undefined) {
+            //If square has not been set...
+            if (this._grid[row][col]._value == SquareType.Undefined) {
                 
                 //Update counter and set the square to be type bomb
-                numberOfBombsSet++;
-                this._grid[X_trial][y_trial]._value = SquareType.Bomb;
+                numberOfBombsSet++; 
+                this._grid[row][col]._value = SquareType.Bomb;
             }
         }
     }
 
-    private _setSquareValue(x: number, y:number): void {
+    private _setSquareValues(): void {
 
-        //If a bomb...
-        if (this._grid[x][y]._value == SquareType.Bomb) {
-            
-            //Do nothing as value already set
-        }
-        //Otherwise..
-        else {
+        //For each square in the grid...
+        this._grid.map(row => {
+            row.map(square => {
 
-            let numberOfSurroundingBombs: number = 0;
+                //If not set as a bomb...
+                if (square._value !== SquareType.Bomb) {
 
-            //Count the number of bombs around the considered square
-            for (let i=-1; i<=1; i++) {
-                for (let j=-1; j<=1; j++) {
+                    let numberOfSurroundingBombs: number = 0;
 
-                    let xGlobal: number = x+i;
-                    let yGlobal: number = y+j;
+                    //Count the number of bombs in adjacent squares
+                    for (let i=-1; i<=1; i++) {
+                        for (let j=-1; j<=1; j++) {
 
-                    //If co-ordinate is a valid array position...
-                    if (xGlobal > -1 && xGlobal < this._numberOfColumns && yGlobal > -1 && yGlobal < this._numberOfRows) {
+                            let rowGlobal: number = square._row+i;
+                            let colGlobal: number = square._col+j;
 
-                        if (this._grid[xGlobal][yGlobal]._value == SquareType.Bomb){
-                            numberOfSurroundingBombs++;                            
+                            //If co-ordinate is a valid array position...
+                            if (rowGlobal > -1 && rowGlobal < this._rows && colGlobal > -1 && colGlobal < this._cols) {
+
+                                if (this._grid[rowGlobal][colGlobal]._value == SquareType.Bomb) {
+                                    numberOfSurroundingBombs++;                            
+                                }
+                            }
                         }
                     }
+                    
+                    //Set the value (Note Enum numbers 1-8 correspond to the number of bombs)
+                    this._grid[square._row][square._col]._value = numberOfSurroundingBombs
                 }
-            }
-
-            //Set the value (Note Enum numbers 1-8 correspond to the number of bombs)
-            this._grid[x][y]._value = numberOfSurroundingBombs
-        }       
+            })
+        });
     }
 
     //Gameplay
     
-    public leftClickSquare(x: number, y:number) {
+    public leftClickSquare(row: number, col:number) {
 
-        //If unclicked square or flag and it isn't game over...
-        if (this._grid[x][y]._displayedValue == SquareType.Unclicked && !this._isGameOver) {
-            
-            switch (this._grid[x][y]._value) {
+        //If square is not revealed yet AND is not game over...
+        if (!this._grid[row][col]._isRevealed && !this._isGameOver) {
+
+            switch (this._grid[row][col]._value) {
 
                 case SquareType.Zero:
-                    this.leftClickBlankSquare(x,y);
+                    this.leftClickSquare_Zero(row,col);                    
                     break;
                 case SquareType.One:
                 case SquareType.Two:
@@ -128,120 +114,110 @@ export default class MinesweeperGameModel {
                 case SquareType.Five:
                 case SquareType.Six:
                 case SquareType.Seven:
-                case SquareType.Eight: {
-                    //Display number on grid
-                    this._grid[x][y]._displayedValue = this._grid[x][y]._value;
+                case SquareType.Eight: { 
+                    this._grid[row][col]._isFlag = false;
+                    this._grid[row][col]._isRevealed = true;
                     break;
-                }          
-                case SquareType.Unclicked: {
-                    //Display number on grid
-                    this._grid[x][y]._displayedValue = this._grid[x][y]._value;
-                }                
+                }      
                 case SquareType.Bomb: {
-
+    
                     //Trigger game-over
                     this._isGameOver = true;
-
-                    //Display the unfound bombs to the player
+    
+                    //For each square...
                     this._grid.map(row => {
                         row.map(square => {
+
+                            //Show the bombs
                             if (square._value == SquareType.Bomb) {
-                                square._displayedValue = square._value;
+                                square._isRevealed = true;
                             }
+
+                            //If marked as flag but has no bomb...
+                            if (square._value !== SquareType.Bomb && square._isFlag == true) {
+                                square._value = SquareType.WrongFlagPlacement;
+                            }
+
+                                              
                         });
-                    });
+                    })
 
-                    //Change displayed value to losing bomb 
-                    this._grid[x][y]._displayedValue = SquareType.BombClicked
+                    //Show the bomb that ended the game as red 
+                    this._grid[row][col]._value = SquareType.BombClicked;         
 
                     break;
                 }
-                case SquareType.BombClicked: {
-                    
-                    //Do nothing 
-                    alert("Something has gone wrong.");
-                    break;
-                }
-                case SquareType.Flag: {
-                    //Do nothing 
-                    alert("Something has gone wrong.");
-                    break;
-                }
-                case SquareType.Undefined: {
-                    //Do nothing 
-                    alert("Something has gone wrong.");
+                case SquareType.BombClicked: 
+                default: 
+                {
+                    alert("Something has gone wrong. Please reload the page to start again. :(");
                     break;
                 }
             }
-        } 
-    }
-
-    public rightClickSquare(x:number, y: number) {
-
-        if (this._isGameOver)
-        {
-            //Do nothing    
-        }
-        //If square has been revealed...
-        else if (this._grid[x][y]._value == this._grid[x][y]._displayedValue)
-        {
-            //Do nothing
-        }
-        //Otherwise...
-        else 
-        {
-            this._grid[x][y].toggleFlag();
         }
     }
 
-    public leftClickBlankSquare(x: number, y:number) {
+    public rightClickSquare(row:number, col: number) {
 
-        if (this._grid[x][y]._value == SquareType.Zero) {
+        //If square is not revealed yet AND is not game over...
+        if (!this._grid[row][col]._isRevealed && !this._isGameOver) {
+            
+            //Toggle flag boolean
+            this._grid[row][col]._isFlag = !this._grid[row][col]._isFlag
+        }
 
-             //Set disp = value
-            this._grid[x][y]._displayedValue = this._grid[x][y]._value;
+     
+    }
 
-            //Check if any of the adjacent squares are blank
-            for (let i=-1; i<=1; i++) {
-                for (let j=-1; j<=1; j++) {
+    public leftClickSquare_Zero(row: number, col:number) {
 
-                    let xGlobal: number = x+i;
-                    let yGlobal: number = y+j;
+        //Reveal value and remove flag 
+        this._grid[row][col]._isFlag = false;
+        this._grid[row][col]._isRevealed = true;
 
-                    console.log(`${xGlobal},${yGlobal}`)
+        //For all adjacent squares...
+        for (let i=-1; i<=1; i++) {
+            for (let j=-1; j<=1; j++) {
 
-                    //Verify valid array position 
-                    if (xGlobal > -1 && xGlobal < this._numberOfColumns && yGlobal > -1 && yGlobal < this._numberOfRows) {
+                //Calculate global co-ordinate of adj. square in consideration...
+                let rowGlobal: number = row+i;
+                let colGlobal: number = col+j;
 
-                        //Ensure we are not doing the same square again 
-                        if (xGlobal == x && yGlobal !== y) {
+                //If valid array position...
+                if (rowGlobal > -1 && rowGlobal < this._rows && colGlobal > -1 && colGlobal < this._cols) {
 
-                            //Check the square is unclicked
-                            if (this._grid[xGlobal][yGlobal]._displayedValue == SquareType.Unclicked) {
+                    //If adjacent square isnt equal to the original clicked square... 
+                    if (row == rowGlobal && col == colGlobal) {
+                        
+                        //Do nothing
+                    }
+                    else {
 
-                                //Recursively call method 
-                                this.leftClickBlankSquare(xGlobal, yGlobal);          
+                        //If square has not already been clicked...
+                        if (!this._grid[rowGlobal][colGlobal]._isRevealed) {
+
+                            switch (this._grid[rowGlobal][colGlobal]._value) {
+
+                                case SquareType.Zero: 
+                                    this.leftClickSquare_Zero(rowGlobal, colGlobal);                 
+                                    break;
+                                case SquareType.One:
+                                case SquareType.Two:
+                                case SquareType.Three:
+                                case SquareType.Four:
+                                case SquareType.Five:
+                                case SquareType.Six:
+                                case SquareType.Seven:
+                                case SquareType.Eight: 
+                                    this._grid[rowGlobal][colGlobal]._isFlag = false;
+                                    this._grid[rowGlobal][colGlobal]._isRevealed = true;
+                                    break;
                             }
                         }
                     }
                 }
             }
-        }
-       
+        }       
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 

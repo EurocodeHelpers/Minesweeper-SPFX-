@@ -9,14 +9,14 @@ export enum SquareType {
     Six=6,
     Seven=7,
     Eight=8,
-
-    Unclicked=9,
-    Bomb=10,
-    BombClicked=11,
-    Flag=12,
-    Undefined=13
+    Bomb=9,
+    BombClicked=10,
+    WrongFlagPlacement=11,
+    Undefined=12
 };
 
 export const ClickedColor: string = "#ffffff";
 
 export const UnclickedColor: string = "#BDBDBD";
+
+// export const NumberColors: [number, string]
