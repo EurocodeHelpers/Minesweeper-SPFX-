@@ -17,23 +17,33 @@ export interface IMinesweeperGridProps {
 
 const MinesweeperGrid = (props: IMinesweeperGridProps) => {
 
+  let gridTemplateColumnsCss: string = "";
+
+  for (let i =0; i<props.game._cols; i++) {
+      gridTemplateColumnsCss += "35px "
+  }
+  
   return (
-    <div className={styles.minesweeper} >
+    <div  >
       {props.game._grid.map(row => {
         return (
-          <div className="fa-4x" style={{border: "1px solid black"}}>
+
+          <div className={styles.gridContainer1}>
+            <div className={styles.gridContainer2} style={{gridTemplateColumns: gridTemplateColumnsCss}}>
             {
-              row.map(square => {
-                return(
-                  <MinesweeperSquare 
-                    square={square} 
-                    onLeftClick={props.onLeftClick}
-                    onRightClick={props.onRightClick} 
-                    onMouseDownEmoticon={props.onMouseDownEmoticon}
-                  />
-                );
-              })
-            }
+                row.map(square => {
+                  return(
+                    <MinesweeperSquare 
+                      square={square} 
+                      onLeftClick={props.onLeftClick}
+                      onRightClick={props.onRightClick} 
+                      onMouseDownEmoticon={props.onMouseDownEmoticon}
+                      isGameOver={props.game._isGameLost}
+                    />
+                  );
+                })
+              }
+            </div>
           </div>
         )
       })}        

@@ -22,42 +22,59 @@ import TimeElapsed from './Dashboard/TimeElapsed';
 
 export default class Minesweeper extends React.Component<IMinesweeperProps, IMinesweeperState> {
 
+  private interval: any = null
+
   constructor(props: IMinesweeperProps) {
 
      super(props);
 
-     let numberOfRows = 9;
-     let numberOfColumns = 9;
-     let numberOfBombs = 15;
+     let numberOfRows = 8;
+     let numberOfColumns = 50;
+     let numberOfBombs = 50;
 
      let board: MinesweeperGameModel = new MinesweeperGameModel(numberOfRows, numberOfColumns, numberOfBombs);
  
      this.state = {
        game: board,
-       isMouseDownOnEmoticon: false
+       isMouseDownOnEmoticon: false,
+       elapsedTime: 0
      }
+  }
 
+  tick() {
+
+    let start: Date = this.state.game._timer;
+    let now: Date = new Date();
+    let elapsedTime = now.getSeconds() - start.getSeconds();
+    this.setState({
+      elapsedTime: elapsedTime,
+    })
+
+  }
+
+  componentDidMount() {
+
+
+
+    this.interval = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   public render(): React.ReactElement<IMinesweeperProps> {
 
     return (
       <div className={styles.minesweeper}>
-        <div className={styles.container}>
+        <div className={styles.container1}>
 
-          {/* Title */}
-          <div className={styles.row}>
-            <div style={{ fontSize: FontSizes.size42, margin: "auto", textAlign: "center", border: "1px solid blue" }}>
-              Minesweeper!
-            </div> 
-          </div>
-
-          {/* Dashboard */}
+           {/* Dashboard */}
           <div className={styles.row}>
            
               {/* Flags Left */}
               <div className={styles.column1} style={{float: "left", border: "0.2px solid red"}}>
-                  99
+                  {this.state.game._remainingFlags}
               </div>
 
               {/* Smiley Face */}
@@ -69,22 +86,20 @@ export default class Minesweeper extends React.Component<IMinesweeperProps, IMin
                   />
               </div>
 
-              {/* Timer */}
-              <TimeElapsed timer={this.state.game._timer} />
-              
+               {/* Timer */}
+               <div className={styles.column1} style={{float: "left", border: "0.2px solid red"}}>
+                  {this.state.elapsedTime}
+              </div>
           </div>
+            
 
-          {/* Minesweeper Board */}
           <div className={styles.row}>
-            <MinesweeperGrid 
-              game={this.state.game} 
-              onLeftClick={this.onLeftClick} 
-              onRightClick={this.onRightClick}
-              onMouseDownEmoticon={this.onMouseDownEmoticon} 
-            />
+            <MinesweeperGrid game={this.state.game} onLeftClick={this.onLeftClick} onRightClick={this.onRightClick} onMouseDownEmoticon={null} />
           </div>
 
-       </div>
+         
+
+        </div>
       </div>
     );
   }

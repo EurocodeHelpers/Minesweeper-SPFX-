@@ -1,13 +1,14 @@
 import MinesweeperSquareModel from './MinesweeperSquareModel';
-import { SquareType } from '../constants';
+import { GameState, SquareType } from '../constants';
 
 export default class MinesweeperGameModel {
 
-    private _rows: number = 0;
-    private _cols: number = 0;
-    private _bombs: number = 0;
+    public _rows: number = 0;
+    public _cols: number = 0;
+    public _bombs: number = 0;
+    public _remainingFlags = 0;
+    public _gameState: GameState = GameState.Undefined;   
 
-    public _isGameOver: boolean = false;
     public _grid: MinesweeperSquareModel[][] = null;    //[Row][Column]
     public _timer: Date = new Date();
 
@@ -24,6 +25,8 @@ export default class MinesweeperGameModel {
         this._setUpEmptyGrid();
         this._setBombLocations();
         this._setSquareValues();
+        this._remainingFlags = this._bombs;
+
     }
 
     private _setUpEmptyGrid(): void {
@@ -100,7 +103,7 @@ export default class MinesweeperGameModel {
     public leftClickSquare(row: number, col:number) {
 
         //If square is not revealed yet AND is not game over...
-        if (!this._grid[row][col]._isRevealed && !this._isGameOver) {
+        if (!this._grid[row][col]._isRevealed && this._gameState == GameState.InProgress) {
 
             switch (this._grid[row][col]._value) {
 
@@ -121,29 +124,7 @@ export default class MinesweeperGameModel {
                 }      
                 case SquareType.Bomb: {
     
-                    //Trigger game-over
-                    this._isGameOver = true;
-    
-                    //For each square...
-                    this._grid.map(row => {
-                        row.map(square => {
-
-                            //Show the bombs
-                            if (square._value == SquareType.Bomb) {
-                                square._isRevealed = true;
-                            }
-
-                            //If marked as flag but has no bomb...
-                            if (square._value !== SquareType.Bomb && square._isFlag == true) {
-                                square._value = SquareType.WrongFlagPlacement;
-                            }
-
-                                              
-                        });
-                    })
-
-                    //Show the bomb that ended the game as red 
-                    this._grid[row][col]._value = SquareType.BombClicked;         
+                    this.leftClickSquare_Bomb(row, col);
 
                     break;
                 }
@@ -155,12 +136,20 @@ export default class MinesweeperGameModel {
                 }
             }
         }
+
+        this.isGameWon()
+
     }
 
     public rightClickSquare(row:number, col: number) {
 
         //If square is not revealed yet AND is not game over...
-        if (!this._grid[row][col]._isRevealed && !this._isGameOver) {
+        if (!this._grid[row][col]._isRevealed && !this._isGameLost) {
+            
+            //Update remaining flags
+            this._remainingFlags = (this._grid[row][col]._isFlag) ? 
+            ++this._remainingFlags :
+            --this._remainingFlags;
             
             //Toggle flag boolean
             this._grid[row][col]._isFlag = !this._grid[row][col]._isFlag
@@ -219,5 +208,55 @@ export default class MinesweeperGameModel {
             }
         }       
     }
+
+    public leftClickSquare_Bomb(row: number, col: number) {
+
+          //Trigger game-over
+          this._isGameLost = true;
+    
+          //For each square...
+          this._grid.map(row => {
+              row.map(square => {
+
+                  //Show the bombs
+                  if (square._value == SquareType.Bomb) {
+                      square._isRevealed = true;
+                  }
+
+                  //If marked as flag but has no bomb...
+                  if (square._value !== SquareType.Bomb && square._isFlag == true) {
+                      square._value = SquareType.WrongFlagPlacement;
+                  }                                    
+              });
+          })
+
+          //Show the bomb that ended the game as red 
+          this._grid[row][col]._value = SquareType.BombClicked;       
+    }
+
+    //Checks
+
+    public isGameWon(): void {
+       
+
+        //For each square in the grid...
+        this._grid.map(row => {
+            row.map(square => {
+
+                //If square is a bomb and not marked with a flag...
+                if (square._value == SquareType.Bomb && square._isFlag == false) {
+
+                   this._gameState = GameState.
+                }
+            });
+        });
+
+        if (this._isGameWon){
+            alert("You have won!")
+        }
+
+    }
+
+
 }
 

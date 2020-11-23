@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import { faSquare, faCircle, faDizzy } from '@fortawesome/free-solid-svg-icons';
-import styles from '../Minesweeper.module.scss';
+import { faGrinWink, faCircle, faDizzy } from '@fortawesome/free-solid-svg-icons';
+import f from '../Minesweeper.module.scss';
 
-const GameOverFace = () => {
+const WinGameFace = () => {
 
     return (
         <span className="fa-layers fa-fw fa-3x">
             <FontAwesomeIcon 
-                icon={faSquare} 
+                icon={faGrinWink} 
                 color="#CCC"
                 onContextMenu={(e)=> e.preventDefault()}
             />
@@ -18,4 +18,4 @@ const GameOverFace = () => {
     )
 }
 
-export default GameOverFace;
+export default WinGameFace;

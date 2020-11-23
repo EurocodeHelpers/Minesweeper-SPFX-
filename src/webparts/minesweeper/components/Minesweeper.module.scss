@@ -1,24 +1,23 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 .minesweeper {
-  
-  //Page 
-  .container {
-    max-width: 700px;
+
+  .container1 {
+    max-width: 400px;
     margin: 0px auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   }
 
   .row {
     @include ms-Grid-row;
-    // @include ms-fontColor-white;
+    // border: 0.2px solid green;    // @include ms-fontColor-white;
     // background-color: $ms-color-themeDark;
-    padding: 20px;
+    // padding: 20px;
   }
-
+  
   .column1 {
     @include ms-Grid-col;
-    @include ms-lg5;
+    @include ms-lg8;
     @include ms-xl5;
   }
 
@@ -28,34 +27,26 @@
     @include ms-xl2;
   }
 
-  .faSmile {
-    position: relative;
-  }
-
-  .faSmile:before {
-    content: "\f111";
-    color: #f1c40f;
+  .gridContainer1 {
+    display: flex;
+    justify-content: center;
+   }
+  
+  .gridContainer2 {
+    display: inline-grid;
+    // grid-template-rows: 35px 35px 35px; => Set by styles
+    grid-column-gap: 0px;
+    grid-row-gap: 0px
   }
   
-  .faSmile:after {
-      left: 0;
-      position: absolute;
-      content: "\f118";
+  .gridItem {
+    // background-color: rgba(255, 255, 255, 0.8);
+    border: 0.1px solid rgba(7, 5, 5, 0.8);
+    padding: 6px;
+    font-size: 20px;
+    text-align: center;
+    
   }
-
-
-
-
-
-  //Minesweeper
-
-  .grid {
-    display: grid;
-  }
-
-  .minesweeperSquare {
-    border: 1px solid black;
-    display: "inline-block";
-  }
+ 
 
 }

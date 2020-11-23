@@ -15,8 +15,13 @@ export enum SquareType {
     Undefined=12
 };
 
+export enum GameState { 
+    GameOver=0,
+    InProgress=1,
+    GameWon=2,
+    Undefined=3,
+}
+
 export const ClickedColor: string = "#ffffff";
 
 export const UnclickedColor: string = "#BDBDBD";
-
-// export const NumberColors: [number, string]

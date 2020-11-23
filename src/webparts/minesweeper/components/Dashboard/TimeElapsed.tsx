@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { faSmile, faSquare, faGrin, faCircle } from '@fortawesome/free-solid-svg-icons';
 import styles from '../Minesweeper.module.scss';
-import GameOverFace from './GameOverFace';
+import GameOverFace from './LoserGameFace';
 import MouseDownFace from './MouseDownFace';
 import SmilyFace from './SmilyFace';
 
