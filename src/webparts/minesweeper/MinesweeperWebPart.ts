@@ -10,9 +10,9 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'MinesweeperWebPartStrings';
 import Minesweeper from './components/Minesweeper';
 import IMinesweeperProps from './components/IMinesweeperProps';
+import { WindowSize } from './components/Tests/WindowSize';
 
 export interface IMinesweeperWebPartProps {
-  description: string;
 }
 
 export default class MinesweeperWebPart extends BaseClientSideWebPart<IMinesweeperWebPartProps> {
@@ -20,11 +20,12 @@ export default class MinesweeperWebPart extends BaseClientSideWebPart<IMinesweep
   public render(): void {
 
     const element: React.ReactElement<IMinesweeperProps> = React.createElement(
-      Minesweeper,
-      {
-        description: this.properties.description
-      }
+      Minesweeper
     );
+
+    // const element: React.ReactElement = React.createElement(
+    //   WindowSize
+    // );
 
     ReactDom.render(element, this.domElement);
   }

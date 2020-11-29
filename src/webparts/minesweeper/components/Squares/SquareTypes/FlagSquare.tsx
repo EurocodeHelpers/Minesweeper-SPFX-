@@ -15,7 +15,6 @@ const FlagSquare = (props: IFlagSquareProps) => {
 
     return (
         <div 
-            className={styles.gridItem} 
             onContextMenu={(e)=> e.preventDefault()} 
         >
             <FontAwesomeIcon 

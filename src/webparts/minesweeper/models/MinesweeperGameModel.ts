@@ -9,8 +9,8 @@ export default class MinesweeperGameModel {
     public _remainingFlags = 0;
     public _gameState: GameState = GameState.Undefined;   
 
-    public _grid: MinesweeperSquareModel[][] = null;    //[Row][Column]
-    public _timer: Date = new Date();
+    public _grid: MinesweeperSquareModel[][] = null;   //[Row][Column]
+    public _timer: Date = null;
 
     constructor(rows: number, cols: number, bombs: number) {
         
@@ -20,6 +20,7 @@ export default class MinesweeperGameModel {
 
         //Start the timer 
         this._timer = new Date();
+        this._gameState = GameState.InProgress;
 
         //Setup the game board 
         this._setUpEmptyGrid();
@@ -103,7 +104,7 @@ export default class MinesweeperGameModel {
     public leftClickSquare(row: number, col:number) {
 
         //If square is not revealed yet AND is not game over...
-        if (!this._grid[row][col]._isRevealed && this._gameState == GameState.InProgress) {
+        if (!this._grid[row][col]._isRevealed) {
 
             switch (this._grid[row][col]._value) {
 
@@ -144,7 +145,7 @@ export default class MinesweeperGameModel {
     public rightClickSquare(row:number, col: number) {
 
         //If square is not revealed yet AND is not game over...
-        if (!this._grid[row][col]._isRevealed && !this._isGameLost) {
+        if (!this._grid[row][col]._isRevealed && this._gameState == GameState.InProgress) {
             
             //Update remaining flags
             this._remainingFlags = (this._grid[row][col]._isFlag) ? 
@@ -212,7 +213,7 @@ export default class MinesweeperGameModel {
     public leftClickSquare_Bomb(row: number, col: number) {
 
           //Trigger game-over
-          this._isGameLost = true;
+          this._gameState = GameState.GameOver;
     
           //For each square...
           this._grid.map(row => {
@@ -238,6 +239,7 @@ export default class MinesweeperGameModel {
 
     public isGameWon(): void {
        
+        let inProgress: boolean = false;
 
         //For each square in the grid...
         this._grid.map(row => {
@@ -245,14 +247,13 @@ export default class MinesweeperGameModel {
 
                 //If square is a bomb and not marked with a flag...
                 if (square._value == SquareType.Bomb && square._isFlag == false) {
-
-                   this._gameState = GameState.
+                    inProgress = true;
                 }
             });
         });
 
-        if (this._isGameWon){
-            alert("You have won!")
+        if (!inProgress){
+            this._gameState = GameState.GameWon;
         }
 
     }

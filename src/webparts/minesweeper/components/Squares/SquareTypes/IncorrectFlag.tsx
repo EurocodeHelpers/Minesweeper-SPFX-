@@ -7,7 +7,7 @@ const IncorrectFlag = () => {
 
     return (
 
-         <div className={`${styles.gridItem}`}>
+         <div>
              <FontAwesomeIcon 
                     icon={faBomb} 
                     color="blue"

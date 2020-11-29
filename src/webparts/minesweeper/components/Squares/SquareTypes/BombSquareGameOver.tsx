@@ -8,10 +8,11 @@ import styles from '../../Minesweeper.module.scss';
 
 const BombSquareGameOver = () => {
 
+    
+
     return (
 
         <div 
-            className={styles.gridItem} 
             style={{backgroundColor: "red"}}
             onContextMenu={(e)=> e.preventDefault()} 
         >

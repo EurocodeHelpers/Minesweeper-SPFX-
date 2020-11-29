@@ -31,7 +31,8 @@
     "office-ui-fabric-react": "^6.189.2",
     "react": "16.8.5",
     "react-app-polyfill": "^2.0.0",
-    "react-dom": "16.8.5"
+    "react-dom": "16.8.5",
+    "typestyle": "^2.1.0"
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-3.9": "^0.4.x",

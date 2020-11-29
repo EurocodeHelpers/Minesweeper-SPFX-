@@ -21,7 +21,6 @@ const UnclickedSquare = (props: IUnclickedSquareProps) => {
 
     return (
         <div 
-            className={styles.gridItem} 
             style={{backgroundColor: "#fff"}}
             onMouseUp={(e) => onMouseUp(e)}
             onContextMenu={(e)=> e.preventDefault()}

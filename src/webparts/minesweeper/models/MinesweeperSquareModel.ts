@@ -14,25 +14,4 @@ export default class MinesweeperSquareModel {
         this._row = row;
         this._col = col;
     }
-
-    public onLeftClick(): void {
-        if (this._isRevealed) {
-            //Do nothing
-        }
-        else{
-            this._isRevealed = true;
-            this._isFlag = false;
-        }
-    }
-
-    public onRightClick(): void {
-
-        if (this._isRevealed) {
-            //Do nothing
-        }
-        else{
-            this._isFlag = !this._isFlag;;
-        }
-    }
-
 }

@@ -6,7 +6,7 @@ import styles from '../../Minesweeper.module.scss';
 const BombSquare = () => {
 
     return (
-        <div className={styles.gridItem} style={{backgroundColor: "#BDBDBD"}}>
+        <div style={{backgroundColor: "#BDBDBD"}}>
           <FontAwesomeIcon 
                     icon={faBomb} 
                     color="#000"
